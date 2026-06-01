@@ -36,12 +36,12 @@ steps:
       REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD }}
       REDDIT_USER_AGENT: ${{ secrets.REDDIT_USER_AGENT }}
     run: |
-      python scraper.py
+      python scraper_CSV.py
 
   - name: Upload CSV + Excel
     uses: actions/upload-artifact@v4
     with:
-      name: reddit-bi-results
+      name: reddit-data-csv
       path: |
         *.csv
         *.xlsx
