@@ -78,48 +78,48 @@ def contains_keywords(text):
 # =========================
 
 for sub in target_subreddits:
-print(f"\n🔍 r/{sub}")
-subreddit = reddit.subreddit(sub)
-
-
-for query in search_queries:
-    print(f"   → {query}")
-
-    try:
-        for post in subreddit.search(query, limit=30):
-
-            if post.stickied:
-                continue
-
-            text = (post.title + " " + post.selftext).lower()
-
-            if not contains_keywords(text):
-                continue
-
-            post.comments.replace_more(limit=0)
-
-            comments = [
-                c.body for c in post.comments.list()[:30]
-            ]
-
-            results.append({
-                "subreddit": sub,
-                "query": query,
-                "title": post.title,
-                "score": post.score,
-                "comments": post.num_comments,
-                "url": post.url,
-                "created_utc": post.created_utc,
-                "text": post.selftext,
-                "top_comments": "\n\n".join(comments)
-            })
-
-            print(f"   ✅ {post.title[:80]}")
-
-            time.sleep(0.3)
-
-    except Exception as e:
-        print("Error:", e)
+    print(f"\n🔍 r/{sub}")
+    subreddit = reddit.subreddit(sub)
+    
+    
+    for query in search_queries:
+        print(f"   → {query}")
+    
+        try:
+            for post in subreddit.search(query, limit=30):
+    
+                if post.stickied:
+                    continue
+    
+                text = (post.title + " " + post.selftext).lower()
+    
+                if not contains_keywords(text):
+                    continue
+    
+                post.comments.replace_more(limit=0)
+    
+                comments = [
+                    c.body for c in post.comments.list()[:30]
+                ]
+    
+                results.append({
+                    "subreddit": sub,
+                    "query": query,
+                    "title": post.title,
+                    "score": post.score,
+                    "comments": post.num_comments,
+                    "url": post.url,
+                    "created_utc": post.created_utc,
+                    "text": post.selftext,
+                    "top_comments": "\n\n".join(comments)
+                })
+    
+                print(f"   ✅ {post.title[:80]}")
+    
+                time.sleep(1)
+    
+        except Exception as e:
+            print("Error:", e)
 
 
 # =========================
@@ -129,6 +129,10 @@ for query in search_queries:
 # =========================
 
 df = pd.DataFrame(results)
+
+if df.empty:
+    print("No data scraped")
+    exit()
 
 df.drop_duplicates(subset=["title"], inplace=True)
 
