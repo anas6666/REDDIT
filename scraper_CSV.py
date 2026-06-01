@@ -68,8 +68,8 @@ search_queries = [
 results = []
 
 def contains_keywords(text):
-text = text.lower()
-return any(k in text for k in keywords)
+    text = text.lower()
+    return any(k in text for k in keywords)
 
 # =========================
 
