@@ -3,7 +3,7 @@ name: Reddit Analyst Scraper
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 * * * *"   # every hour
+    - cron: "0 0 * * *"   # once a day at midnight
 
 jobs:
   scrape:
