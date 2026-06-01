@@ -235,13 +235,9 @@ for sub_name in target_subreddits:
 # =========================
 
 df = pd.DataFrame(results)
-
-if df.empty:
-    print("No data scraped")
-    exit()
 if len(df) == 0:
-print("❌ No posts found")
-exit()
+    print("❌ No posts found")
+    exit()
 
 # REMOVE DUPLICATES
 
