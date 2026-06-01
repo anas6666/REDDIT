@@ -167,66 +167,65 @@ def contains_keywords(text):
 
 # =========================
 
-for sub_name in target_subreddits:
-
-
-print(f"\\n🔍 Searching r/{sub_name}")
-
-try:
-    subreddit = reddit.subreddit(sub_name)
-
-    for query in search_queries:
-
-        print(f"   → Query: {query}")
-
-        try:
-            for submission in subreddit.search(
-                query,
-                sort="relevance",
-                limit=50
-            ):
-
-                if submission.stickied:
-                    continue
-
-                full_text = (
-                    submission.title + " " + submission.selftext
-                ).lower()
-
-                if not contains_keywords(full_text):
-                    continue
-
-                # COMMENTS
-                submission.comments.replace_more(limit=0)
-
-                comments = []
-
-                for comment in submission.comments.list()[:40]:
-                    comments.append(comment.body)
-
-                all_comments = "\\n\\n".join(comments)
-
-                results.append({
-                    "subreddit": sub_name,
-                    "query": query,
-                    "title": submission.title,
-                    "score": submission.score,
-                    "comments_count": submission.num_comments,
-                    "created_utc": submission.created_utc,
-                    "url": submission.url,
-                    "text": submission.selftext,
-                    "all_comments": all_comments
-                })
-
-                print(f"      ✅ {submission.title[:90]}")
-
-                time.sleep(0.2)
-
-        except Exception as e:
-            print(f"Search error: {e}")
-
-except Exception as e:
-    print(f"Subreddit error: {e}")
+for sub_name in target_subreddits:   
+    
+    print(f"\\n🔍 Searching r/{sub_name}")
+    
+    try:
+        subreddit = reddit.subreddit(sub_name)
+    
+        for query in search_queries:
+    
+            print(f"   → Query: {query}")
+    
+            try:
+                for submission in subreddit.search(
+                    query,
+                    sort="relevance",
+                    limit=50
+                ):
+    
+                    if submission.stickied:
+                        continue
+    
+                    full_text = (
+                        submission.title + " " + submission.selftext
+                    ).lower()
+    
+                    if not contains_keywords(full_text):
+                        continue
+    
+                    # COMMENTS
+                    submission.comments.replace_more(limit=0)
+    
+                    comments = []
+    
+                    for comment in submission.comments.list()[:40]:
+                        comments.append(comment.body)
+    
+                    all_comments = "\\n\\n".join(comments)
+    
+                    results.append({
+                        "subreddit": sub_name,
+                        "query": query,
+                        "title": submission.title,
+                        "score": submission.score,
+                        "comments_count": submission.num_comments,
+                        "created_utc": submission.created_utc,
+                        "url": submission.url,
+                        "text": submission.selftext,
+                        "all_comments": all_comments
+                    })
+    
+                    print(f"      ✅ {submission.title[:90]}")
+    
+                    time.sleep(1)
+    
+            except Exception as e:
+                print(f"Search error: {e}")
+    
+    except Exception as e:
+        print(f"Subreddit error: {e}")
 
 
 # =========================
@@ -237,6 +236,9 @@ except Exception as e:
 
 df = pd.DataFrame(results)
 
+if df.empty:
+    print("No data scraped")
+    exit()
 if len(df) == 0:
 print("❌ No posts found")
 exit()
