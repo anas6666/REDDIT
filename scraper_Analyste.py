@@ -5,11 +5,6 @@ import re
 from collections import Counter
 from datetime import datetime
 
-# =========================
-
-# REDDIT API
-
-# =========================
 
 import os
 
@@ -310,18 +305,17 @@ columns=["word", "count"]
 
 with pd.ExcelWriter(excel_name, engine="openpyxl") as writer:
 
-
-df.to_excel(
-    writer,
-    sheet_name="Posts",
-    index=False
-)
-
-analysis_df.to_excel(
-    writer,
-    sheet_name="Top Terms",
-    index=False
-)
+    df.to_excel(
+        writer,
+        sheet_name="Posts",
+        index=False
+    )
+    
+    analysis_df.to_excel(
+        writer,
+        sheet_name="Top Terms",
+        index=False
+    )
 
 
 print(f"\n✅ Saved {len(df)} posts")
