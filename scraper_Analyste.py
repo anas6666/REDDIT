@@ -80,7 +80,7 @@ keywords = [
 "reporting",
 "analytics",
 
-```
+
 # non technical
 "non technical",
 "non analyst",
@@ -115,7 +115,7 @@ keywords = [
 "metabase",
 "looker studio",
 "zoho analytics",
-```
+
 
 ]
 
@@ -169,7 +169,7 @@ return any(k.lower() in text for k in keywords)
 
 for sub_name in target_subreddits:
 
-```
+
 print(f"\\n🔍 Searching r/{sub_name}")
 
 try:
@@ -227,7 +227,7 @@ try:
 
 except Exception as e:
     print(f"Subreddit error: {e}")
-```
+
 
 # =========================
 
@@ -312,7 +312,7 @@ columns=["word", "count"]
 
 with pd.ExcelWriter(excel_name, engine="openpyxl") as writer:
 
-```
+
 df.to_excel(
     writer,
     sheet_name="Posts",
@@ -324,7 +324,7 @@ analysis_df.to_excel(
     sheet_name="Top Terms",
     index=False
 )
-```
+
 
 print(f"\n✅ Saved {len(df)} posts")
 print(f"✅ CSV: {csv_name}")
