@@ -81,7 +81,7 @@ for sub in target_subreddits:
 print(f"\n🔍 r/{sub}")
 subreddit = reddit.subreddit(sub)
 
-```
+
 for query in search_queries:
     print(f"   → {query}")
 
@@ -120,7 +120,7 @@ for query in search_queries:
 
     except Exception as e:
         print("Error:", e)
-```
+
 
 # =========================
 
