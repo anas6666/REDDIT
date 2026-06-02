@@ -229,7 +229,25 @@ for sub_name in target_subreddits:
 
 # =========================
 
+# =========================
+# DATAFRAME
+# =========================
+
+ILLEGAL_CHARACTERS_RE = re.compile(
+    r'[\x00-\x08\x0B-\x0C\x0E-\x1F]'
+)
+
+def clean_excel_text(value):
+    if isinstance(value, str):
+        value = ILLEGAL_CHARACTERS_RE.sub("", value)
+        return value[:32000]  # Excel cell limit protection
+    return value
+
 df = pd.DataFrame(results)
+
+# CLEAN INVALID EXCEL CHARACTERS
+df = df.map(clean_excel_text)
+
 if len(df) == 0:
     print("❌ No posts found")
     exit()
