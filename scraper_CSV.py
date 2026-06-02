@@ -128,8 +128,24 @@ for sub in target_subreddits:
 
 # =========================
 
+ILLEGAL_CHARACTERS_RE = re.compile(
+    r'[\x00-\x08\x0B-\x0C\x0E-\x1F]'
+)
+
+def clean_excel_text(value):
+    if isinstance(value, str):
+        value = ILLEGAL_CHARACTERS_RE.sub("", value)
+        return value[:32000]
+    return value
+
+# =========================
+# SAVE DATA
+# =========================
+
 df = pd.DataFrame(results)
 
+# CLEAN INVALID EXCEL CHARACTERS
+df = df.map(clean_excel_text)
 if df.empty:
     print("No data scraped")
     exit()
